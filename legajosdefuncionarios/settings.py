@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'evaluaciones',
     'funcionarios',
     'eventoslaborales',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
