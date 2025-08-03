@@ -1,5 +1,85 @@
-<html>
-    <body>
-        <h1>Hola world</h1>
-    </body>
-</html>
+{% extends 'layouts/base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="container text-light">
+
+    <h2 class="mb-4 fw-bold text-uppercase">Bienvenido/a al Panel Principal</h2>
+    <p class="mb-5 text-muted">Accedé rápidamente a los módulos disponibles del sistema.</p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-people-fill display-5 mb-3"></i>
+                        <h5 class="card-title">Funcionarios</h5>
+                        <p class="card-text text-muted">Gestión completa del personal.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-text-fill display-5 mb-3"></i>
+                        <h5 class="card-title">Documentos</h5>
+                        <p class="card-text text-muted">Control de legajos y archivos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-graph-up-arrow display-5 mb-3"></i>
+                        <h5 class="card-title">Evaluaciones</h5>
+                        <p class="card-text text-muted">Historial de evaluaciones.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-calendar-check-fill display-5 mb-3"></i>
+                        <h5 class="card-title">Eventos Laborales</h5>
+                        <p class="card-text text-muted">Registros de permisos, sanciones, traslados.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gift-fill display-5 mb-3"></i>
+                        <h5 class="card-title">Beneficios</h5>
+                        <p class="card-text text-muted">Subsidios, becas y apoyos institucionales.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="card-link">
+                <div class="card dark-card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-fill-gear display-5 mb-3"></i>
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text text-muted">Administración de cuentas y accesos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

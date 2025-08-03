@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Legajo de Funcionarios{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Tu CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block styles %}{% endblock %}
+</head>
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
+
+    <div class="d-flex flex-grow-1">
+
+        <!-- Sidebar modernizado -->
+        <aside class="sidebar d-flex flex-column p-4">
+            <div class="sidebar-header mb-5 text-center">
+                <i class="bi bi-people-fill fs-2 text-light"></i>
+                <h4 class="mt-2 mb-0 fw-bold text-uppercase letter-spacing">Talento Humano</h4>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-house-door me-2"></i>Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people me-2"></i>Funcionarios</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text me-2"></i>Documentos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up me-2"></i>Evaluaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calendar-event me-2"></i>Eventos Laborales</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gift me-2"></i>Beneficios</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-gear me-2"></i>Usuarios</a></li>
+                <li class="nav-item mt-4"><a class="nav-link text-danger" href="#"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
+            </ul>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="flex-grow-1 p-4 content-area">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+       <!-- Footer elegante -->
+    <footer class="footer text-center mt-auto py-5">
+        <div class="container">
+            <h6 class="text-light mb-3 fw-semibold">Sistema de Gestión de Talento Humano</h6>
+            <p class="text-muted mb-4 small">Facultad de Ciencias y Tecnología – Universidad Nacional</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="footer-icon"><i class="bi bi-github"></i></a>
+                <a href="#" class="footer-icon"><i class="bi bi-envelope-fill"></i></a>
+                <a href="#" class="footer-icon"><i class="bi bi-globe2"></i></a>
+            </div>
+            <p class="text-secondary mt-4 small mb-0">&copy; 2025 Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
