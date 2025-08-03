@@ -1,0 +1,34 @@
+# Entorno virtual
+venv/
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos del editor (VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+
+# Base de datos SQLite (si usás una local)
+*.sqlite3
+
+# Archivos temporales
+*.log
+*.pot
+*.pyc
+.DS_Store
+
+# Configuraciones locales
+.env
+
+# Archivos de migración rotos o temporales
+*.bak
+*.swp
+
+# Archivos generados por Django
+/static/
+media/
+
+# Archivos de sistema
+Thumbs.db
