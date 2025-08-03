@@ -27,8 +27,7 @@ __pycache__/
 *.swp
 
 # Archivos generados por Django
-/static/
-media/
-
+media/*
+!media/.gitkeep
 # Archivos de sistema
 Thumbs.db
