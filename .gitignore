@@ -31,3 +31,11 @@ media/*
 !media/.gitkeep
 # Archivos de sistema
 Thumbs.db
+
+# Django migrations (excepciones)
+*/migrations/__pycache__/
+*.pyc
+
+# No ignores las migraciones mismas (ej: 0001_initial.py)
+!*/migrations/
+!*/migrations/*.py
