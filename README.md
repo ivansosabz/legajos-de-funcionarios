@@ -126,6 +126,7 @@ Este proyecto está bajo la [Licencia MIT](LICENSE).
 
 | Nombre            | Rol                     | Contacto                          |
 |-------------------|-------------------------|-----------------------------------|
-| Iván Sosa         | Desarrollador Backend   | [@ivansosabz](https://github.com/ivansosabz) |
-| Rossmary Villalba | Desarrolladora Frontend | [@rossmaryv](https://github.com/rossmaryv)   |
+| Iván Sosa         | Desarrollador           | [@ivansosabz](https://github.com/ivansosabz) |
+| Rossmary Villalba | Desarrolladora          | [@rossmaryv](https://github.com/rossmaryv)   |
+
 
