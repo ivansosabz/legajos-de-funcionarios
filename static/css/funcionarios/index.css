@@ -1,0 +1,87 @@
+/* Estilos personalizados para la vista de funcionarios */
+
+.card-funcionario {
+    background: #1e1e2f;
+    border: 1px solid #2c2c3c;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: #fff;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.card-funcionario:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+}
+
+.card-funcionario i.bi-person-circle {
+    font-size: 3rem;
+    color: #bbb;
+}
+
+.card-funcionario .nombre {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 0.8rem;
+}
+
+.card-funcionario .cargo {
+    font-size: 1rem;
+    color: #a2a2a2;
+}
+
+.card-funcionario .departamento {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.card-funcionario .estado {
+    padding: 0.2rem 0.8rem;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    display: inline-block;
+    margin-top: 0.6rem;
+}
+
+.estado-activo {
+    background-color: #198754;
+    color: white;
+}
+
+.estado-inactivo {
+    background-color: #dc3545;
+    color: white;
+}
+
+.card-funcionario .acciones {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.card-funcionario .acciones a {
+    color: #fff;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.card-funcionario .acciones a:hover {
+    opacity: 1;
+}
+.input-group input {
+    background-color: #2b2b3c;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.input-group input::placeholder {
+    color: #bbb;
+}
+
+.input-group .btn {
+    background-color: #444;
+    color: #fff;
+}
