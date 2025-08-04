@@ -1,0 +1,86 @@
+/* Estilos específicos para index.html */
+
+.dark-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    height: 100%;
+}
+
+.dark-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px rgba(74, 111, 165, 0.2);
+    border-color: rgba(74, 111, 165, 0.3);
+}
+
+.dark-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dark-card:hover::before {
+    opacity: 0.8;
+}
+
+.card-body {
+    padding: 1.75rem;
+    text-align: center;
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.card-body i {
+    color: var(--accent-color);
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.dark-card:hover .card-body i {
+    transform: scale(1.1);
+}
+
+.card-link {
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.card-link:hover {
+    opacity: 0.9;
+}
+
+/* Tipografía mejorada */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.text-muted {
+    color: #8a8a8a !important;
+}
+
+/* Container específico para index */
+.index-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}

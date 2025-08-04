@@ -7,6 +7,7 @@
     --text-secondary: #b0b0b0;
     --accent-color: #4a6fa5;
     --hover-color: #2c3e5a;
+    --sidebar-width: 280px;
 }
 
 body {
@@ -16,47 +17,144 @@ body {
     line-height: 1.6;
 }
 
-/* Sidebar mejorado */
+/* Sidebar Elegante */
 .sidebar {
-    width: 260px;
-    background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, #0a0a0a 0%, #161616 100%);
     min-height: 100vh;
-    border-right: 1px solid var(--border-color);
-    padding: 1.5rem 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 100;
 }
 
-.sidebar-header h4 {
-    font-size: 1.2rem;
-    letter-spacing: 0.5px;
-    color: var(--text-primary);
-    padding: 0 1.5rem;
-    margin-bottom: 2rem;
+.sidebar-header {
+    padding: 0 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 1.5rem;
 }
 
-.sidebar .nav-link {
-    color: var(--text-secondary);
-    padding: 0.75rem 1.5rem;
-    margin: 0.25rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+.sidebar-logo {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
+    background: rgba(74, 111, 165, 0.15);
+    border-radius: 16px;
+    border: 1px solid rgba(74, 111, 165, 0.3);
 }
 
-.sidebar .nav-link:hover, .sidebar .nav-link.active {
-    background-color: rgba(74, 111, 165, 0.15);
+.sidebar-logo i {
+    font-size: 1.75rem;
+    color: var(--accent-color);
+}
+
+.sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
     color: var(--text-primary);
-    transform: translateX(4px);
+    margin: 0;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #f0f0f0, #b0b0b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.sidebar .nav-link i {
-    width: 20px;
+.sidebar-nav {
+    flex: 1;
+    padding: 0 1.5rem;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.sidebar-nav .nav-link:hover {
+    background: rgba(74, 111, 165, 0.1);
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+.sidebar-nav .nav-link.active {
+    background: rgba(74, 111, 165, 0.2);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.sidebar-nav .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent-color);
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-nav .nav-link i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-nav .nav-link:hover i {
+    transform: scale(1.15);
+}
+
+.sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #ff6b6b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.logout-link:hover {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff8787;
+}
+
+.logout-link i {
+    font-size: 1.1rem;
+    width: 24px;
     text-align: center;
 }
 
-/* Área de contenido mejorada */
+/* Área de contenido */
 .content-area {
+    flex: 1;
     background-color: var(--bg-secondary);
     padding: 2rem;
     border-radius: 12px;
@@ -64,85 +162,7 @@ body {
     margin: 1rem;
 }
 
-/* Cards mejoradas */
-.dark-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-.dark-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 20px rgba(74, 111, 165, 0.2);
-    border-color: rgba(74, 111, 165, 0.3);
-}
-
-.dark-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-color), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.dark-card:hover::before {
-    opacity: 0.8;
-}
-
-.card-body {
-    padding: 1.75rem;
-}
-
-.card-title {
-    color: var(--text-primary);
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-}
-
-.card-text {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.card-body i {
-    color: var(--accent-color);
-    font-size: 2.25rem;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-}
-
-.dark-card:hover .card-body i {
-    transform: scale(1.1);
-}
-
-/* Tipografía mejorada */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.text-muted {
-    color: #8a8a8a !important;
-}
-
-/* Efectos hover refinados */
-.card-link {
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.card-link:hover {
-    opacity: 0.9;
-}
-
-/* Footer mejorado */
+/* Footer */
 .footer {
     background: linear-gradient(90deg, #0a0a0a 0%, #151515 100%);
     border-top: 1px solid var(--border-color);
@@ -150,12 +170,42 @@ h1, h2, h3, h4, h5, h6 {
     padding: 2rem 0;
 }
 
-.footer-icon {
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-subtitle {
+    color: #8a8a8a;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-icon {
     color: var(--text-secondary);
+    font-size: 1.25rem;
     transition: all 0.3s ease;
 }
 
-.footer-icon:hover {
+.social-icon:hover {
     color: var(--accent-color);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+}
+
+.footer-copyright {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
 }
