@@ -33,9 +33,10 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="{% url 'index' %}" class="nav-link {% if request.path == '/' %}active{% endif %}"><i class="bi bi-house-door"></i><span>Inicio</span></a></li>
-                    <li><a href="{% url 'lista_funcionarios' %}" class="nav-link {% if 'funcionarios' in request.path %}active{% endif %}"><i class="bi bi-people"></i><span>Funcionarios</span></a></li>
-                    <li><a href="#" class="nav-link {% if 'documentos' in request.path %}active{% endif %}"><i class="bi bi-file-earmark-text"></i><span>Documentos</span></a></li>
+
+                    <li><a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i class="bi bi-house-door"></i><span>Inicio</span></a></li>
+                    <li><a href="{% url 'lista_funcionarios' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_funcionarios' %}active{% endif %}"><i class="bi bi-people"></i><span>Funcionarios</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Documentos</span></a></li>
                     <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i><span>Evaluaciones</span></a></li>
                     <li><a href="#" class="nav-link"><i class="bi bi-calendar-event"></i><span>Eventos Laborales</span></a></li>
                     <li><a href="#" class="nav-link"><i class="bi bi-gift"></i><span>Beneficios</span></a></li>
