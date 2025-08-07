@@ -2,55 +2,152 @@
 {% load static %}
 
 {% block title %}Lista de Funcionarios{% endblock %}
+
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/funcionarios/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/funcionarios/index.css' %}">
 {% endblock %}
+
 {% block content %}
 <div class="container">
-    <form method="get" class="mb-4">
+  <form method="get" class="mb-4">
+    <div class="row g-2 align-items-end">
+      <!-- Buscador -->
+      <div class="col-md-4">
         <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Buscar por nombre, cédula, cargo o departamento..." value="{{ request.GET.q }}">
-            <button class="btn btn-outline-light" type="submit">
-                <i class="bi bi-search"></i> Buscar
-            </button>
+          <input type="text" name="q" class="form-control bg-dark text-light" placeholder="Buscar por nombre, cédula, cargo o departamento..." value="{{ query }}">
+          <button class="btn btn-outline-light" type="submit">
+            <i class="bi bi-search"></i> Buscar
+          </button>
         </div>
-    </form>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Funcionarios</h2>
-        <a href="{% url 'insertar_funcionario' %} " class="btn btn-success">
-            <i class="bi bi-person-plus-fill me-1"></i> Agregar Funcionario
-        </a>
-    </div>
+      </div>
 
-    {% if funcionarios %}
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for funcionario in funcionarios %}
-            <div class="col">
-                <div class="card-funcionario">
-                    <div class="acciones">
-                        <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-warning me-1">
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                        <a href="{% url 'eliminar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-danger">
-                            <i class="bi bi-trash-fill"></i>
-                        </a>
-                    </div>
-                    <div class="text-center">
-                        <i class="bi bi-person-circle"></i>
-                        <div class="nombre">{{ funcionario.nombre }} {{ funcionario.apellido }}</div>
-                        <div class="cargo">{{ funcionario.cargo }}</div>
-                        <div class="departamento">{{ funcionario.departamento }}</div>
-                        <div class="estado {% if funcionario.estado == 'Activo' %}estado-activo{% else %}estado-inactivo{% endif %}">
-                            {{ funcionario.estado }}
-                        </div>
-                    </div>
-                </div>
+      <!-- Dropdown Filtrar por -->
+      <div class="col-md-4">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Filtrar por
+          </button>
+          <div class="dropdown-menu p-3 bg-dark border border-light w-100">
+            <!-- Estado -->
+            <div class="mb-2">
+              <label for="estado" class="form-label text-light">Estado:</label>
+              <select name="estado" id="estado" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+                <option value="Activo" {% if estado == "Activo" %}selected{% endif %}>Activo</option>
+                <option value="Inactivo" {% if estado == "Inactivo" %}selected{% endif %}>Inactivo</option>
+              </select>
             </div>
-            {% endfor %}
+            <!-- Departamento -->
+            <div class="mb-2">
+              <label for="departamento" class="form-label text-light">Departamento:</label>
+              <select name="departamento" id="departamento" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+               <option value="">TIC</option>
+               <option value="">Finanzas</option>
+                {% for d in departamentos %}
+                  <option value="{{ d }}" {% if departamento == d %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Cargo -->
+            <div class="mb-2">
+              <label for="cargo" class="form-label text-light">Cargo:</label>
+              <select name="cargo" id="cargo" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+               <option value="">Secretario/a</option>
+               <option value="">Tecnico/a</option>
+               <option value="">Auxiliar Contable</option>
+                {% for c in cargos %}
+                  <option value="{{ c }}" {% if cargo == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-2">Aplicar filtros</button>
+          </div>
         </div>
-    {% else %}
-        <div class="alert alert-secondary text-center mt-4">No hay funcionarios registrados.</div>
-    {% endif %}
-</div>
+      </div>
 
+      <!-- Selector de Vista -->
+      <div class="col-md-4">
+        <select name="vista" class="form-select bg-dark text-light" onchange="this.form.submit()">
+          <option value="tarjetas" {% if vista == "tarjetas" %}selected{% endif %}>Ver como Tarjetas</option>
+          <option value="tabla" {% if vista == "tabla" %}selected{% endif %}>Ver como Tabla</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <!-- Encabezado + botón -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Funcionarios</h2>
+    <a href="{% url 'insertar_funcionario' %}" class="btn btn-success">
+      <i class="bi bi-person-plus-fill me-1"></i> Agregar Funcionario
+    </a>
+  </div>
+
+  <!-- Lista de Funcionarios -->
+  {% if funcionarios %}
+    {% if vista == 'tabla' %}
+      <div class="table-responsive">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Cédula</th>
+              <th>Cargo</th>
+              <th>Departamento</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for funcionario in funcionarios %}
+            <tr>
+              <td>{{ funcionario.nombre }}</td>
+              <td>{{ funcionario.apellido }}</td>
+              <td>{{ funcionario.cedula }}</td>
+              <td>{{ funcionario.cargo }}</td>
+              <td>{{ funcionario.departamento }}</td>
+              <td>
+                <span class="badge {% if funcionario.estado == 'Activo' %}bg-success{% else %}bg-danger{% endif %}">
+                  {{ funcionario.estado }}
+                </span>
+              </td>
+              <td>
+                <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil-fill"></i></a>
+                <a href="{% url 'eliminar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for funcionario in funcionarios %}
+        <div class="col">
+          <div class="card-funcionario">
+            <div class="acciones">
+              <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-warning me-1"><i class="bi bi-pencil-fill"></i></a>
+              <a href="{% url 'eliminar_funcionario' funcionario.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></a>
+            </div>
+            <div class="text-center">
+              <i class="bi bi-person-circle"></i>
+              <div class="nombre">{{ funcionario.nombre }} {{ funcionario.apellido }}</div>
+              <div class="cargo">{{ funcionario.cargo }}</div>
+              <div class="departamento">{{ funcionario.departamento }}</div>
+              <div class="estado {% if funcionario.estado == 'Activo' %}estado-activo{% else %}estado-inactivo{% endif %}">
+                {{ funcionario.estado }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="alert alert-secondary text-center mt-4">No hay funcionarios registrados.</div>
+  {% endif %}
+</div>
 {% endblock %}
