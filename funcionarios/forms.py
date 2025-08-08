@@ -1,7 +1,6 @@
 from django import forms
 from .models import PerfilFuncionario
 from datetime import date
-import re
 
 DEPARTAMENTOS = [
     ('RRHH', 'RRHH'),

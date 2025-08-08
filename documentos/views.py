@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, redirect
 from .models import DocumentoFuncionario, PerfilFuncionario, TipoDocumento
 from django.db.models import Q
+from .forms import DocumentoForm
+from django.contrib import messages
 
 def lista_documentos(request):
     documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
@@ -47,3 +49,16 @@ def lista_documentos(request):
         'tipos_documento': TipoDocumento.objects.all(),
         'estados': estados,
     })
+def nuevo_documento(request):
+    if request.method == 'POST':
+        form = DocumentoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Documento agregado exitosamente.')
+            return redirect('lista_documentos')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+    else:
+        form = DocumentoForm()
+
+    return render(request, 'documentos/insertar.html', {'form': form})
