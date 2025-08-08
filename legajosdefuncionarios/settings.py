@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'funcionarios',
     'eventoslaborales',
     'usuarios',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
