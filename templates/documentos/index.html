@@ -1,0 +1,165 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Documentos por Funcionario{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/documentos/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Filtros y búsqueda -->
+  <form method="get" class="mb-4">
+    <div class="row g-2 align-items-end">
+      <!-- Buscador -->
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control bg-dark text-light" placeholder="Buscar documentos..." value="{{ request.GET.q }}">
+          <button class="btn btn-outline-light" type="submit">
+            <i class="bi bi-search"></i> Buscar
+          </button>
+        </div>
+      </div>
+
+      <!-- Dropdown Filtrar por -->
+      <div class="col-md-4">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Filtrar por
+          </button>
+          <div class="dropdown-menu p-3 bg-dark border border-light w-100">
+            <!-- Funcionario -->
+            <div class="mb-2">
+              <label for="funcionario" class="form-label text-light">Funcionario:</label>
+              <select name="funcionario" id="funcionario" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+                {% for funcionario in funcionarios %}
+                <option value="{{ funcionario.id }}" {% if request.GET.funcionario == funcionario.id|stringformat:"s" %}selected{% endif %}>
+                  {{ funcionario }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Tipo Documento -->
+            <div class="mb-2">
+              <label for="tipo_documento" class="form-label text-light">Tipo de Documento:</label>
+              <select name="tipo_documento" id="tipo_documento" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+                {% for tipo in tipos_documento %}
+                <option value="{{ tipo.id }}" {% if request.GET.tipo_documento == tipo.id|stringformat:"s" %}selected{% endif %}>
+                  {{ tipo.nombre }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Estado -->
+            <div class="mb-2">
+              <label for="estado" class="form-label text-light">Estado:</label>
+              <select name="estado" id="estado" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+                {% for key, value in estados.items %}
+                <option value="{{ key }}" {% if request.GET.estado == key %}selected{% endif %}>
+                  {{ value }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-2">Aplicar filtros</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Nuevo Documento -->
+      <div class="col-md-4">
+        <a href="{# {% url 'nuevo_documento' %} #}" class="btn btn-success w-100">
+          <i class="bi bi-plus-circle me-1"></i> Nuevo Documento
+        </a>
+      </div>
+    </div>
+  </form>
+
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Documentos</h2>
+    <div class="d-flex gap-2">
+      <a href="{# {% url 'tipos_documento' %} #}" class="btn btn-outline-light">
+        <i class="bi bi-journal-text me-1"></i> Tipos de Documento
+      </a>
+    </div>
+  </div>
+
+  <!-- Tabla de documentos -->
+  {% if page_obj %}
+    <div class="table-responsive">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Funcionario</th>
+            <th>Tipo</th>
+            <th>Presentación</th>
+            <th>Vencimiento</th>
+            <th>Archivo</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for doc in page_obj %}
+          <tr>
+            <td>{{ doc.funcionario }}</td>
+            <td>{{ doc.tipo_documento }}</td>
+            <td>{{ doc.fecha_presentacion|date:"d/m/Y" }}</td>
+            <td>
+              {% if doc.fecha_vencimiento %}
+                {{ doc.fecha_vencimiento|date:"d/m/Y" }}
+                {% if doc.esta_vencido %}
+                  <span class="badge bg-danger ms-2">Vencido</span>
+                {% endif %}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if doc.archivo %}
+                <a href="{{ doc.archivo.url }}" target="_blank" class="link-primary">
+                  <i class="bi bi-file-earmark-arrow-down"></i> Descargar
+                </a>
+              {% else %}
+                <span class="text-muted">Sin archivo</span>
+              {% endif %}
+            </td>
+            <td>
+              <span class="badge
+                {% if doc.estado == 'APROBADO' %}bg-success
+                {% elif doc.estado == 'PENDIENTE' %}bg-secondary
+                {% elif doc.estado == 'RECHAZADO' %}bg-warning text-dark
+                {% elif doc.estado == 'VENCIDO' %}bg-danger
+                {% endif %}">
+                {{ doc.get_estado_display }}
+              </span>
+            </td>
+            <td>
+              <div class="btn-group btn-group-sm" role="group">
+                <a href="{# {% url 'documentos:editar_documento' doc.id %} #}" class="btn btn-outline-warning">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
+                <a href="{# {% url 'documentos:eliminar_documento' doc.id %} #}" class="btn btn-outline-danger">
+                  <i class="bi bi-trash-fill"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+  {% else %}
+    <div class="alert alert-secondary text-center mt-4">
+      <i class="bi bi-info-circle me-2"></i> No se encontraron documentos con los filtros aplicados.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

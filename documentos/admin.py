@@ -14,5 +14,3 @@ class DocumentoFuncionarioAdmin(admin.ModelAdmin):
     list_filter = ('tipo_documento', 'estado')
     date_hierarchy = 'fecha_presentacion'
 
-
-# Register your models here.
