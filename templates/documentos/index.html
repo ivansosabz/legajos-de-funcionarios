@@ -141,10 +141,10 @@
             </td>
             <td>
               <div class="btn-group btn-group-sm" role="group">
-                <a href="{# {% url 'documentos:editar_documento' doc.id %} #}" class="btn btn-outline-warning">
+                <a href="{% url 'editar_documento' doc.id %}" class="btn btn-outline-warning">
                   <i class="bi bi-pencil-fill"></i>
                 </a>
-                <a href="{# {% url 'documentos:eliminar_documento' doc.id %} #}" class="btn btn-outline-danger">
+                <a href="{% url 'eliminar_documento' doc.id %}" class="btn btn-outline-danger">
                   <i class="bi bi-trash-fill"></i>
                 </a>
               </div>
