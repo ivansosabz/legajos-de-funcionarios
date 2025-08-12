@@ -9,4 +9,6 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('funcionarios/',include('funcionarios.urls')),
     path('documentos/',include('documentos.urls')),
+    path('eventoslaborales/', include('eventoslaborales.urls')),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
