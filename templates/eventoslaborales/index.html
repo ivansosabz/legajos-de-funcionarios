@@ -1,0 +1,149 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Eventos Laborales{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/eventoslaborales/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- Toolbar: Buscar | Filtrar | Nuevo -->
+  <form method="get" class="d-flex gap-3 align-items-center mb-4 flex-wrap">
+    <!-- Buscador -->
+    <div class="input-group input-group-lg" style="max-width: 380px;">
+      <input
+        type="text"
+        name="q"
+        class="form-control"
+        placeholder="Buscar por nombre de funcionario…"
+        value="{{ q|default:'' }}"
+      >
+      <button class="btn btn-outline-light" type="submit">
+        <i class="bi bi-search"></i> Buscar
+      </button>
+    </div>
+
+    <!-- Botón Filtrar por (abre panel) -->
+    <button
+      class="btn btn-light text-dark px-4"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#filtrosPanel"
+      aria-expanded="false"
+      aria-controls="filtrosPanel"
+    >
+      Filtrar por <i class="bi bi-caret-down-fill ms-1"></i>
+    </button>
+
+    <a href="{% url 'insertar_evento' %}" class="btn btn-success px-4">
+      <i class="bi bi-plus-lg"></i> Nuevo Evento
+    </a>
+  </form>
+
+  <!-- Panel de filtros -->
+  <div id="filtrosPanel" class="collapse mb-4 {% if tipo_evento %}show{% endif %}">
+    <div class="card bg-dark border rounded-4 shadow-sm">
+      <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+          <input type="hidden" name="q" value="{{ q|default:'' }}">
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label text-muted">Tipo de evento</label>
+            <select name="tipo_evento" class="form-select">
+              <option value="">Todos</option>
+              {% for t in tipos_evento %}
+                <option value="{{ t.value }}" {% if tipo_evento == t.value %}selected{% endif %}>
+                  {{ t.label }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label text-muted d-block">&nbsp;</label>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-funnel"></i> Aplicar
+              </button>
+              <a href="{% url 'lista_eventos' %}" class="btn btn-outline-secondary">Limpiar</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Título sección -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold">Eventos Laborales</h2>
+  </div>
+
+  <!-- GRID de tarjetas (tu código original, intacto) -->
+  <div class="row">
+    {% for evento in eventos %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card bg-black text-light h-100 shadow-lg p-3 rounded-4">
+
+        <div class="text-center mb-3">
+          {% if evento.url_resolucion_evento %}
+            {% with fname=evento.url_resolucion_evento.name|lower %}
+              {% if fname|slice:"-4:" == ".pdf" %}
+                <img src="{% static 'img/pdf-icon.png' %}" alt="Documento PDF" width="80">
+                <p class="mb-0 text-muted small">Documento PDF</p>
+              {% elif fname|slice:"-5:" == ".docx" or fname|slice:"-4:" == ".doc" %}
+                <img src="{% static 'img/word-icon.png' %}" alt="Documento Word" width="80">
+                <p class="mb-0 text-muted small">Documento Word</p>
+              {% elif fname|slice:"-4:" == ".png" or fname|slice:"-4:" == ".jpg" or fname|slice:"-5:" == ".jpeg" %}
+                <img src="{{ evento.url_resolucion_evento.url }}" alt="Imagen" class="img-fluid rounded" style="max-height: 150px;">
+              {% else %}
+                <i class="bi bi-file-earmark text-secondary" style="font-size: 3rem;"></i>
+                <p class="mb-0 text-muted small">Archivo</p>
+              {% endif %}
+            {% endwith %}
+          {% else %}
+            <i class="bi bi-file-earmark text-secondary" style="font-size: 3rem;"></i>
+            <p class="mb-0 text-muted small">Sin documento</p>
+          {% endif %}
+        </div>
+
+        <h5 class="fw-bold text-white">{{ evento.get_tipo_evento_display }}</h5>
+        <p><strong>Funcionario:</strong><br> {{ evento.id_funcionario }}</p>
+
+        {% if evento.tipo_evento == "beneficios" and evento.beneficio %}
+          <p><strong>Tipo de Beneficio:</strong><br> {{ evento.get_beneficio_display }}</p>
+        {% endif %}
+
+        <p><strong>Motivo:</strong><br> {{ evento.motivo }}</p>
+        <p><strong>Desde:</strong> {{ evento.fecha_inicio|date:"d \\d\\e F \\d\\e Y" }}</p>
+        <b>Hasta:</b>
+        {% if evento.fecha_fin %}
+            {{ evento.fecha_fin|date:"d \\d\\e F \\d\\e Y" }}
+        {% else %}
+            Sin fecha límite
+        {% endif %}
+
+        <div class="d-flex justify-content-between mt-3">
+          {% if evento.url_resolucion_evento %}
+            <a href="{{ evento.url_resolucion_evento.url }}" target="_blank" class="btn btn-outline-info btn-sm">
+              <i class="bi bi-eye"></i> Ver
+            </a>
+          {% endif %}
+
+          {% if evento.pk %}
+            <a href="{% url 'editar_evento' evento.pk %}" class="btn btn-warning btn-sm">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <a href="{% url 'eliminar_evento' evento.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Deseas eliminar este evento?');">
+              <i class="bi bi-trash3-fill"></i>
+            </a>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% empty %}
+      <p class="text-muted">No hay eventos registrados.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

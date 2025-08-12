@@ -49,18 +49,17 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'evaluaciones' %}active{% endif %}">
-                            <i class="bi bi-graph-up"></i><span>Evaluaciones</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'eventos_laborales' %}active{% endif %}">
+                        <a href="{% url 'lista_eventos' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_eventos' %}active{% endif %}">
                             <i class="bi bi-calendar-event"></i><span>Eventos Laborales</span>
                         </a>
+
                     </li>
+
+
                     <li>
-                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'beneficios' %}active{% endif %}">
-                            <i class="bi bi-gift"></i><span>Beneficios</span>
+                    <li>
+                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'evaluaciones' %}active{% endif %}">
+                            <i class="bi bi-gift"></i><span>Evaluaciones</span>
                         </a>
                     </li>
                     <li>

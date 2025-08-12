@@ -1,0 +1,43 @@
+/* Card contenedora */
+.create-card{
+  width: min(900px, 100%);
+  border-radius: 16px;
+  background: #121212;
+  border: 1px solid #272727;
+}
+
+.bg-create-header{
+  background: linear-gradient(90deg,#0f0f0f,#1a1a1a);
+  border-bottom: 1px solid #2f2f2f;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+/* Animación suave */
+.animate-fade-in{ animation: fade .2s ease-in }
+@keyframes fade{
+  from{ opacity:0; transform: translateY(4px) }
+  to{ opacity:1; transform: translateY(0) }
+}
+
+/* Inputs y selects oscuros */
+.form-control-dark,
+.form-select.form-control-dark{
+  background-color:#1a1a1a !important;
+  color:#e0e0e0 !important;
+  border:1px solid #2a2a2a !important;
+}
+.form-control-dark::placeholder{ color:#8f8f8f; }
+.form-control-dark:focus,
+.form-select.form-control-dark:focus{
+  border-color:#3b82f6 !important;
+  box-shadow: 0 0 0 .15rem rgba(59,130,246,.25);
+}
+
+/* Botón gradiente confirmar */
+.btn-gradient{
+  background: linear-gradient(90deg,#2563eb,#0ea5e9);
+  color:#fff;
+  border:0;
+}
+.btn-gradient:hover{ filter: brightness(1.05); }
