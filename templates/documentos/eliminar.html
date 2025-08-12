@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title %}Eliminar Funcionario{% endblock %}
+{% block title %}Eliminar Documento{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/documentos/eliminar.css' %}">
@@ -15,8 +15,8 @@
                 <i class="bi bi-exclamation-triangle-fill"></i> Confirmar eliminación
             </h2>
             <p class="mb-4">
-                ¿Estás seguro de que deseas eliminar al funcionario 
-                <strong class="text-warning">{{ funcionario.nombre }} {{ funcionario.apellido }}</strong>?
+                ¿Estás seguro de que deseas eliminar el documento 
+                <strong class="text-warning">{{ documento.nombre }}</strong>?
                 <br>
                 Esta acción no se puede deshacer.
             </p>
@@ -26,7 +26,7 @@
                     <button type="submit" class="btn btn-danger btn-lg px-4">
                         <i class="bi bi-trash-fill"></i> Eliminar
                     </button>
-                    <a href="{% url 'lista_funcionarios' %}" class="btn btn-secondary btn-lg px-4">
+                    <a href="{% url 'lista_documentos' %}" class="btn btn-secondary btn-lg px-4">
                         <i class="bi bi-x-circle"></i> Cancelar
                     </a>
                 </div>

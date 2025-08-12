@@ -1,8 +1,10 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import DocumentoFuncionario, PerfilFuncionario, TipoDocumento
 from django.db.models import Q
 from .forms import DocumentoForm
 from django.contrib import messages
+import os
+from django.conf import settings
 
 def lista_documentos(request):
     documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
@@ -49,6 +51,7 @@ def lista_documentos(request):
         'tipos_documento': TipoDocumento.objects.all(),
         'estados': estados,
     })
+
 def nuevo_documento(request):
     if request.method == 'POST':
         form = DocumentoForm(request.POST, request.FILES)
@@ -62,3 +65,34 @@ def nuevo_documento(request):
         form = DocumentoForm()
 
     return render(request, 'documentos/insertar.html', {'form': form})
+
+def editar_documento(request, pk):
+    documento = get_object_or_404(DocumentoFuncionario, pk=pk)
+
+    if request.method == "POST":
+        form = DocumentoForm(request.POST, request.FILES, instance=documento)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Documento actualizado exitosamente.")
+            return redirect("lista_documentos")
+        else:
+            messages.error(request, "Por favor, corrija los errores en el formulario.")
+    else:
+        form = DocumentoForm(instance=documento)
+
+    return render(request, "documentos/editar.html", {"form": form})
+
+def eliminar_documento(request, pk):
+    documento = get_object_or_404(DocumentoFuncionario, pk=pk)
+
+    if request.method == "POST":
+        # Eliminar archivo físico si existe
+        if documento.archivo and os.path.isfile(documento.archivo.path):
+            os.remove(documento.archivo.path)
+
+        documento.delete()
+        return redirect("lista_documentos")
+
+    return render(
+        request, "documentos/eliminar.html", {"documento": documento}
+    )
