@@ -12,7 +12,7 @@
 
             <!-- NOMBRE -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-person-fill"></i> Nombre:</label>
+                <label class="form-label">Nombre:</label>
                 {{ form.nombre }}
                 {% if form.nombre.errors %}
                     <div class="text-danger small">{{ form.nombre.errors.0 }}</div>
@@ -21,16 +21,16 @@
 
             <!-- APELLIDO -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-person-bounding-box"></i> Apellido:</label>
+                <label class="form-label">Apellido:</label>
                 {{ form.apellido }}
                 {% if form.apellido.errors %}
                     <div class="text-danger small">{{ form.apellido.errors.0 }}</div>
                 {% endif %}
             </div>
 
-            <!-- CEDULA -->
+            <!-- CÉDULA -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-credit-card"></i> Cédula:</label>
+                <label class="form-label">Cédula:</label>
                 {{ form.cedula }}
                 {% if form.cedula.errors %}
                     <div class="text-danger small">{{ form.cedula.errors.0 }}</div>
@@ -39,7 +39,7 @@
 
             <!-- CARGO -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-briefcase-fill"></i> Cargo:</label>
+                <label class="form-label">Cargo:</label>
                 {{ form.cargo }}
                 {% if form.cargo.errors %}
                     <div class="text-danger small">{{ form.cargo.errors.0 }}</div>
@@ -48,7 +48,7 @@
 
             <!-- FECHA INGRESO -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-calendar-event"></i> Fecha ingreso:</label>
+                <label class="form-label">Fecha ingreso:</label>
                 {{ form.fecha_ingreso }}
                 {% if form.fecha_ingreso.errors %}
                     <div class="text-danger small">{{ form.fecha_ingreso.errors.0 }}</div>
@@ -57,7 +57,7 @@
 
             <!-- DEPARTAMENTO -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-diagram-3-fill"></i> Departamento:</label>
+                <label class="form-label">Departamento:</label>
                 {{ form.departamento }}
                 {% if form.departamento.errors %}
                     <div class="text-danger small">{{ form.departamento.errors.0 }}</div>
@@ -66,7 +66,7 @@
 
             <!-- ESTADO -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-check-circle-fill"></i> Estado:</label>
+                <label class="form-label">Estado:</label>
                 {{ form.estado }}
                 {% if form.estado.errors %}
                     <div class="text-danger small">{{ form.estado.errors.0 }}</div>
@@ -75,7 +75,7 @@
 
             <!-- ESTADO CIVIL -->
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-heart-fill"></i> Estado Civil:</label>
+                <label class="form-label">Estado Civil:</label>
                 {{ form.estado_civil }}
                 {% if form.estado_civil.errors %}
                     <div class="text-danger small">{{ form.estado_civil.errors.0 }}</div>
@@ -84,12 +84,8 @@
 
             <!-- BOTONES -->
             <div class="text-end mt-4">
-                <button type="submit" class="btn btn-warning">
-                    <i class="bi bi-pencil-square"></i> Guardar Cambios
-                </button>
-                <a href="{% url 'lista_funcionarios' %}" class="btn btn-secondary">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </a>
+                <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                <a href="{% url 'lista_funcionarios' %}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
