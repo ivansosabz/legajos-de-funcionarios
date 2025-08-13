@@ -25,46 +25,42 @@
       <div class="col-md-4">
         <div class="dropdown">
           <button class="btn btn-outline-light dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Filtrar por
+          Filtrar por
           </button>
-          <div class="dropdown-menu p-3 bg-dark border border-light w-100">
-            <!-- Estado -->
-            <div class="mb-2">
-              <label for="estado" class="form-label text-light">Estado:</label>
-              <select name="estado" id="estado" class="form-select bg-dark text-light">
-                <option value="">Todos</option>
-                <option value="Activo" {% if estado == "Activo" %}selected{% endif %}>Activo</option>
-                <option value="Inactivo" {% if estado == "Inactivo" %}selected{% endif %}>Inactivo</option>
-              </select>
-            </div>
-            <!-- Departamento -->
-            <div class="mb-2">
-              <label for="departamento" class="form-label text-light">Departamento:</label>
-              <select name="departamento" id="departamento" class="form-select bg-dark text-light">
-                <option value="">Todos</option>
-               <option value="">TIC</option>
-               <option value="">Finanzas</option>
-                {% for d in departamentos %}
-                  <option value="{{ d }}" {% if departamento == d %}selected{% endif %}>{{ d }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <!-- Cargo -->
-            <div class="mb-2">
-              <label for="cargo" class="form-label text-light">Cargo:</label>
-              <select name="cargo" id="cargo" class="form-select bg-dark text-light">
-                <option value="">Todos</option>
-               <option value="">Secretario/a</option>
-               <option value="">Tecnico/a</option>
-               <option value="">Auxiliar Contable</option>
-                {% for c in cargos %}
-                  <option value="{{ c }}" {% if cargo == c %}selected{% endif %}>{{ c }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary w-100 mt-2">Aplicar filtros</button>
+              <div class="dropdown-menu p-3 bg-dark border border-light w-100">
+                  <!-- Estado -->
+                  <div class="mb-2">
+                      <label for="estado" class="form-label text-light">Estado:</label>
+                      <select name="estado" id="estado" class="form-select bg-dark text-light">
+                          <option value="">Todos</option>
+                          {% for e in estados %}
+                              <option value="{{ e }}" {% if estado == e %}selected{% endif %}>{{ e }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  <!-- Departamento -->
+                  <div class="mb-2">
+                      <label for="departamento" class="form-label text-light">Departamento:</label>
+                      <select name="departamento" id="departamento" class="form-select bg-dark text-light">
+                          <option value="">Todos</option>
+                          {% for d in departamentos %}
+                              <option value="{{ d }}" {% if departamento == d %}selected{% endif %}>{{ d }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  <!-- Cargo -->
+                  <div class="mb-2">
+                      <label for="cargo" class="form-label text-light">Cargo:</label>
+                      <select name="cargo" id="cargo" class="form-select bg-dark text-light">
+                          <option value="">Todos</option>
+                          {% for c in cargos %}
+                              <option value="{{ c }}" {% if cargo == c %}selected{% endif %}>{{ c }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 mt-2">Aplicar filtros</button>
+              </div>
           </div>
-        </div>
       </div>
 
       <!-- Selector de Vista -->
@@ -147,7 +143,9 @@
       </div>
     {% endif %}
   {% else %}
-    <div class="alert alert-secondary text-center mt-4">No hay funcionarios registrados.</div>
+    <div class="alert alert-secondary text-center mt-4">
+      <i class="bi bi-info-circle me-2"></i> No hay funcionarios registrados.
+    </div>
   {% endif %}
 </div>
 {% endblock %}

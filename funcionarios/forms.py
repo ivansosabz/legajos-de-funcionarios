@@ -38,7 +38,10 @@ class FuncionarioForm(forms.ModelForm):
             'apellido': forms.TextInput(attrs={'class': 'form-control form-control-dark', 'placeholder': 'Apellido'}),
             'cedula': forms.TextInput(attrs={'class': 'form-control form-control-dark', 'placeholder': 'Cédula'}),
             'cargo': forms.Select(choices=CARGOS, attrs={'class': 'form-select form-control-dark'}),
-            'fecha_ingreso': forms.DateInput(attrs={'class': 'form-control form-control-dark', 'type': 'date'}),
+            'fecha_ingreso': forms.DateInput(
+                attrs={'class': 'form-control form-control-dark', 'type': 'date'},
+                format="%Y-%m-%d",
+                ),
             'departamento': forms.Select(choices=DEPARTAMENTOS, attrs={'class': 'form-select form-control-dark'}),
             'estado': forms.Select(choices=ESTADOS, attrs={'class': 'form-select form-control-dark'}),
             'estado_civil': forms.Select(choices=ESTADOS_CIVILES, attrs={'class': 'form-select form-control-dark'})
