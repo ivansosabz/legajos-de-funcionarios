@@ -1,97 +1,75 @@
 {% extends 'layouts/base.html' %}
-{% load static %}
 {% load widget_tweaks %}
+{% load static %}
 
-{% block title %}Registrar Evento Laboral {% endblock %}
+{% block title %}Nuevo Evento Laboral{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/eventoslaborales/insertar.css' %}">
+{# Reutilizamos exactamente el CSS de documentos para que se vea igual #}
+<link rel="stylesheet" href="{% static 'css/documentos/insertar.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center min-vh-100 px-3">
-  <div class="card create-card shadow-lg animate-fade-in">
-    <div class="card-header bg-create-header text-center">
-      <h4 class="mb-0 text-white">Registro de Evento Laboral</h4>
-    </div>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-light">
+      <i class="bi bi-calendar-plus me-2"></i>Nuevo Evento Laboral
+    </h2>
+    <a href="{% url 'lista_eventos' %}" class="btn btn-outline-light">
+      <i class="bi bi-arrow-left me-1"></i> Volver
+    </a>
+  </div>
 
-    <div class="card-body">
-      <form method="POST" enctype="multipart/form-data" class="row g-3">
+  <div class="card bg-dark border-light shadow-lg">
+    <div class="card-body p-4">
+      <form method="post" enctype="multipart/form-data" class="row g-3">
         {% csrf_token %}
 
-        <!-- Tipo de Evento -->
         <div class="col-md-6">
-          <label for="id_tipo_evento" class="form-label text-white">
-            <i class="bi bi-briefcase-fill me-1"></i>Tipo de Evento
-          </label>
-          {{ form.tipo_evento|add_class:"form-select form-control-dark" }}
-        </div>
-
-        <!-- Funcionario -->
-        <div class="col-md-6">
-          <label for="id_funcionario" class="form-label text-white">
-            <i class="bi bi-person-badge-fill me-1"></i>Funcionario
-          </label>
-          {{ form.id_funcionario|add_class:"form-select form-control-dark" }}
-        </div>
-
-        <!-- Subtipo de Beneficio (visible solo si tipo_evento = beneficios) -->
-        <div class="col-md-12" id="beneficio_field" style="display: none;">
-          <label for="id_beneficio" class="form-label text-white">
-            <i class="bi bi-gift-fill me-1"></i>Tipo de Beneficio
-          </label>
-          {{ form.beneficio|add_class:"form-select form-control-dark" }}
-        </div>
-
-        <!-- Motivo -->
-        <div class="col-md-12">
-          <label for="id_motivo" class="form-label text-white">
-            <i class="bi bi-justify-left me-1"></i>Motivo
-          </label>
-          {{ form.motivo|add_class:"form-control form-control-dark" }}
-        </div>
-
-                <!-- Fechas -->
-        <div class="col-md-6">
-          <label for="id_fecha_inicio" class="form-label text-white">
-            <i class="bi bi-calendar-check me-1"></i>Fecha de Inicio
-          </label>
-          {{ form.fecha_inicio|add_class:"form-control form-control-dark" }}
+          <label for="id_tipo_evento" class="form-label text-light">Tipo de Evento</label>
+          {{ form.tipo_evento|add_class:"form-select bg-dark text-light border-secondary" }}
         </div>
 
         <div class="col-md-6">
-          <div class="d-flex justify-content-between align-items-end">
-            <div class="flex-grow-1 me-3">
-              <label for="id_fecha_fin" class="form-label text-white">
-                <i class="bi bi-calendar-event me-1"></i>Fecha de Fin
-              </label>
-              {{ form.fecha_fin|add_class:"form-control form-control-dark" }}
-            </div>
-            <div class="form-check mb-2">
-              <!-- Render del campo extra -->
-              {{ form.no_end_date }}
-              <label class="form-check-label text-white-50" for="id_no_end_date">Sin fecha de fin</label>
-            </div>
+          <label for="id_funcionario" class="form-label text-light">Funcionario</label>
+          {{ form.id_funcionario|add_class:"form-select bg-dark text-light border-secondary" }}
+        </div>
+
+        {# Aparece solo si tipo_evento = beneficios #}
+        <div class="col-md-6" id="beneficio_field" style="display:none;">
+          <label for="id_beneficio" class="form-label text-light">Tipo de Beneficio</label>
+          {{ form.beneficio|add_class:"form-select bg-dark text-light border-secondary" }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_motivo" class="form-label text-light">Motivo</label>
+          {{ form.motivo|add_class:"form-control bg-dark text-light border-secondary" }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_fecha_inicio" class="form-label text-light">Fecha de Inicio</label>
+         {{ form.fecha_inicio|add_class:"form-control bg-dark text-light border-secondary w-100"|attr:"style:width:100%" }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_fecha_fin" class="form-label text-light">Fecha de Fin</label>
+          {{ form.fecha_fin|add_class:"form-control bg-dark text-light border-secondary w-100"|attr:"style:width:100%" }}
+          <div class="form-check mt-2">
+            {{ form.no_end_date }}
+            <label class="form-check-label text-light" for="id_no_end_date">Sin fecha de fin</label>
           </div>
         </div>
 
-
-        <!-- Archivo -->
         <div class="col-md-12">
-          <label for="id_url_resolucion_evento" class="form-label text-white">
-            <i class="bi bi-paperclip me-1"></i>Archivo de Resolución
-          </label>
-          {{ form.url_resolucion_evento|add_class:"form-control form-control-dark" }}
+          <label for="id_url_resolucion_evento" class="form-label text-light">Archivo de Resolución</label>
+          {{ form.url_resolucion_evento|add_class:"form-control bg-dark text-light border-secondary" }}
         </div>
 
-        <!-- Botones -->
-        <div class="col-md-12 d-flex justify-content-between mt-4">
-          <button type="submit" class="btn btn-gradient">
-            <i class="bi bi-check-circle-fill me-1"></i>Guardar
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-success me-2">
+            <i class="bi bi-check-circle me-1"></i> Guardar
           </button>
-          <a href="{% url 'lista_eventos' %}" class="btn btn-outline-light">
-            <i class="bi bi-arrow-left-circle me-1"></i>Cancelar
-          </a>
+          <a href="{% url 'lista_eventos' %}" class="btn btn-outline-light">Cancelar</a>
         </div>
       </form>
     </div>
@@ -102,38 +80,19 @@
 {% block scripts %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const tipoEvento = document.getElementById('id_tipo_evento');
-    const beneficioField = document.getElementById('beneficio_field');
+    const tipo = document.getElementById('id_tipo_evento');
+    const beneficioBox = document.getElementById('beneficio_field');
+    function toggleBeneficio(){ beneficioBox.style.display = (tipo && tipo.value === 'beneficios') ? 'block' : 'none'; }
+    if (tipo) { tipo.addEventListener('change', toggleBeneficio); toggleBeneficio(); }
 
-    function toggleBeneficioField() {
-      beneficioField.style.display = (tipoEvento.value === 'beneficios') ? 'block' : 'none';
-    }
-
-    if (tipoEvento) {
-      tipoEvento.addEventListener('change', toggleBeneficioField);
-      toggleBeneficioField();
-    }
-
-    // ----- Sin fecha de fin -----
     const chkNoEnd = document.getElementById('id_no_end_date');
     const inputFin = document.getElementById('id_fecha_fin');
-
-    function toggleFechaFin() {
+    function toggleFechaFin(){
       if (!chkNoEnd || !inputFin) return;
-      if (chkNoEnd.checked) {
-        inputFin.value = '';
-        inputFin.setAttribute('disabled', 'disabled');
-      } else {
-        inputFin.removeAttribute('disabled');
-      }
+      if (chkNoEnd.checked) { inputFin.value=''; inputFin.setAttribute('disabled','disabled'); }
+      else { inputFin.removeAttribute('disabled'); }
     }
-
-    if (chkNoEnd) {
-      chkNoEnd.addEventListener('change', toggleFechaFin);
-      // Ejecutar una vez al cargar (si el form vino con initial marcado)
-      toggleFechaFin();
-    }
+    if (chkNoEnd){ chkNoEnd.addEventListener('change', toggleFechaFin); toggleFechaFin(); }
   });
 </script>
 {% endblock %}
-

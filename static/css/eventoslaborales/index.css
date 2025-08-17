@@ -1,103 +1,84 @@
 /* Contenedor general */
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
+.container {
+  max-width: 1200px;
 }
 
-/* Tarjeta oscura tipo “dark-card” */
-.event-card {
-  background: #171717;
-  border: 1px solid #2a2a2a;
-  border-radius: 14px;
-  padding: 22px;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  box-shadow: 0 0 10px rgba(0,0,0,.45);
-  height: 100%;
-}
-.event-card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 10px 26px rgba(0,0,0,.55);
-  border-color: #3b3b3b;
-}
-
-/* Encabezado pequeño con iconos de acción */
-.event-actions{
-  position: absolute;
-  right: 14px;
-  top: 12px;
-  display: flex;
-  gap: .35rem;
-}
-.event-actions .btn{
-  --bs-btn-padding-y: .25rem;
-  --bs-btn-padding-x: .45rem;
-  --bs-btn-font-size: .85rem;
-  border-radius: 8px;
-}
-
-/* Icono/preview arriba */
-.event-preview{
-  text-align: center;
-  margin-bottom: .75rem;
-}
-.event-preview .file-icon{
-  font-size: 3rem;
-  color: #8aa4ff;
-}
-
-/* Títulos / meta */
-.event-title{
-  font-weight: 700;
-  color: #e9e9e9;
-  font-size: 1.05rem;
-  margin-bottom: .35rem;
-}
-.event-meta{
-  color: #b7b7b7;
-  font-size: .95rem;
-}
-.event-meta b{
-  color: #e2e2e2;
-}
-
-/* Badges */
-.badge-success-soft{
-  background: rgba(34,197,94,.12);
-  color: #34d399;
-  border: 1px solid rgba(34,197,94,.25);
-  border-radius: 999px;
-  padding: .25rem .6rem;
-  font-weight: 600;
-  font-size: .75rem;
-}
-.badge-danger-soft{
-  background: rgba(239,68,68,.12);
-  color: #f87171;
-  border: 1px solid rgba(239,68,68,.25);
-  border-radius: 999px;
-  padding: .25rem .6rem;
-  font-weight: 600;
-  font-size: .75rem;
-}
-
-/* Botón “Registrar” arriba */
-.btn-new-event{
-  background: linear-gradient(90deg,#2563eb,#0ea5e9);
-  border: 0;
+/* Buscador grande alineado con el tema oscuro */
+.input-group input.form-control {
+  background-color: #1e1e2f;
+  border: 1px solid #444;
   color: #fff;
-  border-radius: 999px;
-  padding: .55rem 1rem;
-}
-.btn-new-event:hover{ filter: brightness(1.06); }
-
-/* Texto del cuerpo */
-.event-body p{
-  margin: 0 0 .4rem 0;
 }
 
-/* Para la grilla */
-.card-cols{
-  row-gap: 1.25rem !important;
+.input-group input::placeholder {
+  color: #bbb !important;
+  opacity: 1;
+}
+
+.input-group .btn {
+  border: 1px solid #444;
+  color: #fff;
+}
+
+.input-group .btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Botón “Filtrar por” y panel de filtros */
+.btn.btn-light.text-dark {
+  background-color: #e9ecef;
+  border: 1px solid #adb5bd;
+  color: #212529;
+}
+
+#filtrosPanel .card.bg-dark {
+  background-color: #1e1e2f !important;
+  border-color: #444 !important;
+}
+
+#filtrosPanel .form-label {
+  color: #e5e5e5;
+}
+
+#filtrosPanel .form-select {
+  background-color: #212529;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+/* Tarjetas de evento (match con tu estilo oscuro) */
+.card.bg-black.text-light {
+  background-color: #1a1a1a !important;
+  border: 1px solid #2c2c3c;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.card.bg-black.text-light:hover {
+  transform: translateY(-4px);
+  border-color: rgba(74, 111, 165, 0.35);
+  box-shadow: 0 4px 18px rgba(74,111,165,0.18);
+}
+
+/* Botones en tarjetas */
+.btn-outline-info.btn-sm {
+  border-color: #4a6fa5;
+  color: #9ec1ff;
+}
+
+.btn-outline-info.btn-sm:hover {
+  background-color: #4a6fa5;
+  color: #fff;
+}
+
+/* Estados de texto */
+.text-muted.small {
+  color: #9aa0a6 !important;
+}
+
+/* Responsive: grid más cómoda en móvil */
+@media (max-width: 576px) {
+  .input-group.input-group-lg {
+    max-width: 100% !important;
+  }
 }
