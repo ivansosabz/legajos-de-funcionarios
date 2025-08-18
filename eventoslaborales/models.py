@@ -52,3 +52,5 @@ class EventoLaboral(models.Model):
         if self.url_resolucion_evento:
             self.url_resolucion_evento.delete(save=False)
         super().delete(*args, **kwargs)
+
+

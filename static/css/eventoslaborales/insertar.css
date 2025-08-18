@@ -1,43 +1,104 @@
-/* Card contenedora */
-.create-card{
-  width: min(900px, 100%);
-  border-radius: 16px;
-  background: #121212;
-  border: 1px solid #272727;
+/* Card base (igual a documentos) */
+.create-card,
+.card.bg-dark,
+.card {
+  background-color: #1e1e2f;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.05);
 }
 
-.bg-create-header{
-  background: linear-gradient(90deg,#0f0f0f,#1a1a1a);
-  border-bottom: 1px solid #2f2f2f;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+/* Cabecera de la card */
+.bg-create-header {
+  background: linear-gradient(90deg, #121212, #1f2633);
+  border-bottom: 1px solid #2c2c3c;
 }
 
-/* Animación suave */
-.animate-fade-in{ animation: fade .2s ease-in }
-@keyframes fade{
-  from{ opacity:0; transform: translateY(4px) }
-  to{ opacity:1; transform: translateY(0) }
-}
-
-/* Inputs y selects oscuros */
+/* Inputs: soporta tus clases actuales y las de documentos */
 .form-control-dark,
-.form-select.form-control-dark{
-  background-color:#1a1a1a !important;
-  color:#e0e0e0 !important;
-  border:1px solid #2a2a2a !important;
-}
-.form-control-dark::placeholder{ color:#8f8f8f; }
-.form-control-dark:focus,
-.form-select.form-control-dark:focus{
-  border-color:#3b82f6 !important;
-  box-shadow: 0 0 0 .15rem rgba(59,130,246,.25);
+.form-control,
+.form-select {
+  background-color: #1e1e2f !important;
+  border: 1px solid #444 !important;
+  color: #fff !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* Botón gradiente confirmar */
-.btn-gradient{
-  background: linear-gradient(90deg,#2563eb,#0ea5e9);
-  color:#fff;
-  border:0;
+.form-control-dark:focus,
+.form-control:focus,
+.form-select:focus {
+  background-color: #1e1e2f !important;
+  border-color: #4a6fa5 !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(74, 111, 165, 0.25) !important;
 }
-.btn-gradient:hover{ filter: brightness(1.05); }
+
+/* Labels y textos */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #eaeaea;
+}
+
+.text-muted { color: #6c757d !important; }
+.text-danger { color: #dc3545 !important; }
+
+/* Botones (mantén el look de documentos) */
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+.btn-outline-light {
+  border-color: #6c757d;
+  color: #f8f9fa;
+}
+.btn-outline-light:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Si sigues usando btn-gradient, haz que combine con el tema */
+.btn-gradient {
+  background: linear-gradient(90deg, #198754, #4a6fa5);
+  border: none;
+  color: #fff;
+}
+.btn-gradient:hover {
+  filter: brightness(1.05);
+}
+
+/* Date inputs */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .card-body { padding: 1.25rem; }
+  .col-md-6 { width: 100%; }
+}
+/* === Fuerza ancho completo en inputs/select === */
+.form-control,
+.form-select {
+  width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* === Fechas/Horas: algunos navegadores ignoran width si no se especifica === */
+input[type="date"].form-control,
+input[type="time"].form-control,
+input[type="datetime-local"].form-control {
+  display: block;
+  width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Columnas bootstrap dentro de .row pueden imponer min-content */
+.row > [class*="col-"] { min-width: 0; }

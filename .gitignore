@@ -1,41 +1,13 @@
-# Entorno virtual
-venv/
-
-# Archivos de Python compilados
+﻿.venv/
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Archivos del editor (VSCode, PyCharm, etc.)
-.vscode/
-.idea/
-
-# Base de datos SQLite (si usás una local)
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
 *.sqlite3
-
-# Archivos temporales
-*.log
-*.pot
-*.pyc
-.DS_Store
-
-# Configuraciones locales
 .env
-
-# Archivos de migración rotos o temporales
-*.bak
-*.swp
-
-# Archivos generados por Django
-media/*
-!media/.gitkeep
-# Archivos de sistema
-Thumbs.db
-
-# Django migrations (excepciones)
-*/migrations/__pycache__/
-*.pyc
-
-# No ignores las migraciones mismas (ej: 0001_initial.py)
-!*/migrations/
-!*/migrations/*.py
+.env.*
+.idea/
+.vscode/
+media/
+staticfiles/
