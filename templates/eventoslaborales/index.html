@@ -121,10 +121,11 @@
                 <a href="{% url 'editar_evento' e.id %}" class="btn btn-outline-warning">
                   <i class="bi bi-pencil-fill"></i>
                 </a>
-                <a href="{% url 'eliminar_evento' e.id %}" class="btn btn-outline-danger"
-                   onclick="return confirm('¿Deseas eliminar este evento?');">
-                  <i class="bi bi-trash-fill"></i>
-                </a>
+                <a href="{% url 'eliminar_evento' e.id %}"
+   class="btn btn-outline-danger">
+  <i class="bi bi-trash-fill"></i>
+</a>
+
               </div>
             </td>
           </tr>
