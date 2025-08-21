@@ -58,8 +58,8 @@
 
                     <li>
                     <li>
-                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'evaluaciones' %}active{% endif %}">
-                            <i class="bi bi-gift"></i><span>Evaluaciones</span>
+                       <a href="{% url 'lista_evaluaciones' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_evaluaciones' %}active{% endif %}">
+                          <i class="bi bi-clipboard-check"></i><span>Evaluaciones</span>
                         </a>
                     </li>
                     <li>

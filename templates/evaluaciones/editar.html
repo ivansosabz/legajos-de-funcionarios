@@ -1,0 +1,80 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Editar Evaluación{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/documentos/insertar.css' %}">
+<style>input[type="date"]{width:100%;}</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-light"><i class="bi bi-pencil-square me-2"></i>Editar Evaluación</h2>
+    <a href="{% url 'lista_evaluaciones' %}" class="btn btn-outline-light">
+      <i class="bi bi-arrow-left me-1"></i> Volver
+    </a>
+  </div>
+
+  <div class="card bg-dark border-light shadow-lg">
+    <div class="card-body p-4">
+      <form method="post" enctype="multipart/form-data" class="row g-3">
+        {% csrf_token %}
+
+        <div class="col-md-6">
+          <label class="form-label text-light">Funcionario</label>
+          {{ form.id_funcionario|add_class:"form-select bg-dark text-light border-secondary" }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label text-light">Tipo de personal</label>
+          {{ form.tipo_personal|add_class:"form-select bg-dark text-light border-secondary" }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label text-light">Período de evaluación</label>
+          {{ form.periodo_evaluacion|add_class:"form-select bg-dark text-light border-secondary" }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label text-light">Fecha de evaluación</label>
+          {{ form.fecha_evaluacion|add_class:"form-control bg-dark text-light border-secondary w-100" }}
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label text-light">Acta de evaluación</label>
+
+          {# input manual + opción de limpiar (igual que en eventos) #}
+          <input type="file" name="acta_evaluacion" id="id_acta_evaluacion"
+                 class="form-control bg-dark text-light border-secondary">
+
+          {% if evaluacion.acta_evaluacion %}
+            <small class="text-muted d-block mt-2">
+              Archivo actual:
+              <a href="{{ evaluacion.acta_evaluacion.url }}" target="_blank">
+                {{ evaluacion.acta_evaluacion.name|default:"ver" }}
+              </a>
+            </small>
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" id="clear_file"
+                     name="acta_evaluacion-clear" value="on">
+              <label class="form-check-label text-light" for="clear_file">
+                Eliminar archivo actual
+              </label>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-warning me-2">
+            <i class="bi bi-save me-1"></i> Guardar cambios
+          </button>
+          <a href="{% url 'lista_evaluaciones' %}" class="btn btn-outline-light">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
