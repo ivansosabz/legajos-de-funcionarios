@@ -6,6 +6,7 @@ from django.contrib import messages
 import os
 from django.conf import settings
 from .models import TipoDocumento
+from django.db.models import ProtectedError
 
 def lista_documentos(request):
     documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
@@ -126,10 +127,24 @@ def editar_tipo_documento(request, pk):
         form = TipoDocumentoForm(instance=tipo)
     return render(request, "documentos/tipos/editar.html", {"form": form})
 
+# def eliminar_tipo_documento(request, pk):
+#     tipo = get_object_or_404(TipoDocumento, pk=pk)
+#     if request.method == "POST":
+#         tipo.delete()
+#         messages.success(request, "Tipo de documento eliminado exitosamente.")
+#         return redirect("lista_tipos_documento")
+#     return render(request, "documentos/tipos/eliminar.html", {"tipo": tipo})
+
 def eliminar_tipo_documento(request, pk):
     tipo = get_object_or_404(TipoDocumento, pk=pk)
     if request.method == "POST":
-        tipo.delete()
-        messages.success(request, "Tipo de documento eliminado exitosamente.")
+        try:
+            tipo.delete()
+            messages.success(request, "✅ Tipo de documento eliminado exitosamente.")
+        except ProtectedError:
+            messages.error(
+                request,
+                "⚠️ No se puede eliminar este tipo porque tiene documentos asociados.",
+            )
         return redirect("lista_tipos_documento")
     return render(request, "documentos/tipos/eliminar.html", {"tipo": tipo})
