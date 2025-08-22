@@ -22,7 +22,6 @@ class DocumentoFuncionario(models.Model):
         ('PENDIENTE', 'Pendiente'),
         ('APROBADO', 'Aprobado'),
         ('RECHAZADO', 'Rechazado'),
-        ('VENCIDO', 'Vencido'),
     ]
 
     funcionario = models.ForeignKey(

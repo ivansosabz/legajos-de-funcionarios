@@ -65,6 +65,15 @@
                 {% endfor %}
               </select>
             </div>
+            <!-- Vencimiento -->
+            <div class="mb-2">
+              <label for="vencido" class="form-label text-light">Vencimiento:</label>
+              <select name="vencido" id="vencido" class="form-select bg-dark text-light">
+                <option value="">Todos</option>
+                <option value="1" {% if request.GET.vencido == "1" %}selected{% endif %}>Vencidos</option>
+                <option value="0" {% if request.GET.vencido == "0" %}selected{% endif %}>No vencidos</option>
+              </select>
+            </div>
             <button type="submit" class="btn btn-primary w-100 mt-2">Aplicar filtros</button>
           </div>
         </div>

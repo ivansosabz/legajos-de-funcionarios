@@ -7,21 +7,71 @@ import os
 from django.conf import settings
 from .models import TipoDocumento
 from django.db.models import ProtectedError
+from django.utils import timezone
+
+
+# def lista_documentos(request):
+#     documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
+
+#     # Filtros desde GET
+#     query = request.GET.get('q')
+#     estado = request.GET.get('estado')
+#     funcionario_id = request.GET.get('funcionario')
+#     tipo_documento_id = request.GET.get('tipo_documento')
+
+#     if query:
+#         documentos = documentos.filter(
+#             Q(observaciones__icontains=query) |
+#             Q(funcionario__nombre__icontains=query) |
+#             Q(tipo_documento__nombre__icontains=query)
+#         )
+
+#     if estado:
+#         documentos = documentos.filter(estado=estado)
+
+#     if funcionario_id:
+#         documentos = documentos.filter(funcionario_id=funcionario_id)
+
+#     if tipo_documento_id:
+#         documentos = documentos.filter(tipo_documento_id=tipo_documento_id)
+
+#     # Opcional: paginar si ya usás paginación
+#     from django.core.paginator import Paginator
+#     paginator = Paginator(documentos.order_by('-fecha_presentacion'), 10)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     # Diccionario de estados
+#     estados = {
+#         'APROBADO': 'Aprobado',
+#         'PENDIENTE': 'Pendiente',
+#         'RECHAZADO': 'Rechazado',
+#     }
+
+#     return render(request, 'documentos/index.html', {
+#         'page_obj': page_obj,
+#         'funcionarios': PerfilFuncionario.objects.all(),
+#         'tipos_documento': TipoDocumento.objects.all(),
+#         'estados': estados,
+#     })
 
 def lista_documentos(request):
-    documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
+    documentos = DocumentoFuncionario.objects.select_related(
+        "funcionario", "tipo_documento"
+    )
 
     # Filtros desde GET
-    query = request.GET.get('q')
-    estado = request.GET.get('estado')
-    funcionario_id = request.GET.get('funcionario')
-    tipo_documento_id = request.GET.get('tipo_documento')
+    query = request.GET.get("q")
+    estado = request.GET.get("estado")
+    funcionario_id = request.GET.get("funcionario")
+    tipo_documento_id = request.GET.get("tipo_documento")
+    vencido = request.GET.get("vencido")  # <-- nuevo filtro
 
     if query:
         documentos = documentos.filter(
-            Q(observaciones__icontains=query) |
-            Q(funcionario__nombre__icontains=query) |
-            Q(tipo_documento__nombre__icontains=query)
+            Q(observaciones__icontains=query)
+            | Q(funcionario__nombre__icontains=query)
+            | Q(tipo_documento__nombre__icontains=query)
         )
 
     if estado:
@@ -33,26 +83,39 @@ def lista_documentos(request):
     if tipo_documento_id:
         documentos = documentos.filter(tipo_documento_id=tipo_documento_id)
 
-    # Opcional: paginar si ya usás paginación
+    if vencido == "1":  # solo vencidos
+        documentos = documentos.filter(fecha_vencimiento__lt=timezone.now().date())
+    elif vencido == "0":  # solo no vencidos
+        documentos = documentos.filter(
+            Q(fecha_vencimiento__gte=timezone.now().date())
+            | Q(fecha_vencimiento__isnull=True)
+        )
+
+    # # Opcional: paginar
     from django.core.paginator import Paginator
-    paginator = Paginator(documentos.order_by('-fecha_presentacion'), 10)
-    page_number = request.GET.get('page')
+
+    paginator = Paginator(documentos.order_by("-fecha_presentacion"), 10)
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     # Diccionario de estados
     estados = {
-        'APROBADO': 'Aprobado',
-        'PENDIENTE': 'Pendiente',
-        'RECHAZADO': 'Rechazado',
-        'VENCIDO': 'Vencido',
+        "APROBADO": "Aprobado",
+        "PENDIENTE": "Pendiente",
+        "RECHAZADO": "Rechazado",
     }
 
-    return render(request, 'documentos/index.html', {
-        'page_obj': page_obj,
-        'funcionarios': PerfilFuncionario.objects.all(),
-        'tipos_documento': TipoDocumento.objects.all(),
-        'estados': estados,
-    })
+    return render(
+        request,
+        "documentos/index.html",
+        {
+            "page_obj": page_obj,
+            "funcionarios": PerfilFuncionario.objects.all(),
+            "tipos_documento": TipoDocumento.objects.all(),
+            "estados": estados,
+        },
+    )
+
 
 def nuevo_documento(request):
     if request.method == 'POST':
