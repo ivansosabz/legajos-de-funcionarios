@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import DocumentoFuncionario, PerfilFuncionario, TipoDocumento
 from django.db.models import Q
-from .forms import DocumentoForm
+from .forms import DocumentoForm, TipoDocumentoForm
 from django.contrib import messages
 import os
 from django.conf import settings
+from .models import TipoDocumento
 
 def lista_documentos(request):
     documentos = DocumentoFuncionario.objects.select_related('funcionario', 'tipo_documento')
@@ -96,3 +97,39 @@ def eliminar_documento(request, pk):
     return render(
         request, "documentos/eliminar.html", {"documento": documento}
     )
+
+# CRUD Tipos de Documento
+def lista_tipos_documento(request):
+    tipos = TipoDocumento.objects.all().order_by("nombre")
+    return render(request, "documentos/tipos/index.html", {"tipos": tipos})
+
+def nuevo_tipo_documento(request):
+    if request.method == "POST":
+        form = TipoDocumentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tipo de documento agregado exitosamente.")
+            return redirect("lista_tipos_documento")
+    else:
+        form = TipoDocumentoForm()
+    return render(request, "documentos/tipos/insertar.html", {"form": form})
+
+def editar_tipo_documento(request, pk):
+    tipo = get_object_or_404(TipoDocumento, pk=pk)
+    if request.method == "POST":
+        form = TipoDocumentoForm(request.POST, instance=tipo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tipo de documento actualizado exitosamente.")
+            return redirect("lista_tipos_documento")
+    else:
+        form = TipoDocumentoForm(instance=tipo)
+    return render(request, "documentos/tipos/editar.html", {"form": form})
+
+def eliminar_tipo_documento(request, pk):
+    tipo = get_object_or_404(TipoDocumento, pk=pk)
+    if request.method == "POST":
+        tipo.delete()
+        messages.success(request, "Tipo de documento eliminado exitosamente.")
+        return redirect("lista_tipos_documento")
+    return render(request, "documentos/tipos/eliminar.html", {"tipo": tipo})

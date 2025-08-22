@@ -1,0 +1,75 @@
+/* 📂 static/css/tipos/index.css */
+
+/* Espaciado general del contenedor */
+.container {
+    padding: 20px;
+}
+
+/* Título principal */
+h2 {
+    font-weight: 600;
+    color: #f8f9fa;
+}
+
+/* Botón "Nuevo Tipo" */
+.btn-success {
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 255, 100, 0.2);
+}
+
+/* Tabla */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #212529 !important;
+    color: #e9ecef;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.7em;
+    border-radius: 8px;
+}
+
+/* Botones de acciones */
+.btn-outline-warning,
+.btn-outline-danger {
+    border-radius: 6px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #212529;
+    transform: scale(1.05);
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Alerta */
+.alert {
+    border-radius: 8px;
+    font-size: 0.95rem;
+}

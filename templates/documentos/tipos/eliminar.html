@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Eliminar Tipo de Documento{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/tipos/eliminar.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg border-0 bg-dark text-light">
+        <div class="card-body text-center">
+            <h2 class="mb-4 text-danger">
+                <i class="bi bi-exclamation-triangle-fill"></i> Confirmar eliminación
+            </h2>
+            <p class="mb-4">
+                ¿Estás seguro de que deseas eliminar el tipo de documento 
+                <strong class="text-warning">{{ tipo.nombre }}</strong>?
+                <br>
+                Esta acción no se puede deshacer.
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-danger btn-lg px-4">
+                        <i class="bi bi-trash-fill"></i> Eliminar
+                    </button>
+                    <a href="{% url 'lista_tipos_documento' %}" class="btn btn-secondary btn-lg px-4">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
