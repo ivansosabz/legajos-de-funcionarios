@@ -1,0 +1,130 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Iniciar Sesión - Talento Humano{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/usuarios/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <!-- Header con logo -->
+        <div class="login-header">
+            <div class="login-logo">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <p class="login-subtitle">Sistema de Gestión de Talento Humano</p>
+        </div>
+
+        <!-- Formulario -->
+        <form method="post" class="login-form" novalidate>
+            {% csrf_token %}
+            
+            <!-- Campo Usuario -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}" class="form-label">
+                    <i class="bi bi-person"></i>
+                    Usuario
+                </label>
+                <div class="input-group">
+                    {{ form.username }}
+                </div>
+                {% if form.username.errors %}
+                    <div class="form-error">
+                        {{ form.username.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}" class="form-label">
+                    <i class="bi bi-lock"></i>
+                    Contraseña
+                </label>
+                <div class="input-group">
+                    {{ form.password }}
+                    <button type="button" class="password-toggle" aria-label="Mostrar/ocultar contraseña">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                {% if form.password.errors %}
+                    <div class="form-error">
+                        {{ form.password.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Botón de login -->
+            <button type="submit" class="login-btn">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Iniciar Sesión</span>
+            </button>
+
+            <!-- Errores generales -->
+            {% if form.non_field_errors or form.errors and not form.username.errors and not form.password.errors %}
+                <div class="login-error">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.</span>
+                </div>
+            {% endif %}
+        </form>
+
+        <!-- Footer del login -->
+        <div class="login-footer">
+            <p class="text-muted">
+                <i class="bi bi-shield-check"></i>
+                Acceso seguro y protegido
+            </p>
+        </div>
+    </div>
+
+    <!-- Elementos decorativos -->
+    <div class="login-bg-elements">
+        <div class="bg-circle bg-circle-1"></div>
+        <div class="bg-circle bg-circle-2"></div>
+        <div class="bg-circle bg-circle-3"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle de contraseña
+    const passwordToggle = document.querySelector('.password-toggle');
+    const passwordField = document.querySelector('input[type="password"]');
+    
+    if (passwordToggle && passwordField) {
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            icon.className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+    }
+
+    // Animación de entrada
+    const loginCard = document.querySelector('.login-card');
+    loginCard.style.opacity = '0';
+    loginCard.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        loginCard.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        loginCard.style.opacity = '1';
+        loginCard.style.transform = 'translateY(0)';
+    }, 100);
+
+    // Focus en primer campo
+    const firstInput = document.querySelector('.login-form input');
+    if (firstInput) {
+        firstInput.focus();
+    }
+});
+</script>
+{% endblock %}

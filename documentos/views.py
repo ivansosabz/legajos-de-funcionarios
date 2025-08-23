@@ -8,6 +8,10 @@ from django.conf import settings
 from .models import TipoDocumento
 from django.db.models import ProtectedError
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
+
+@login_required(login_url="login")  # redirige a la página de login si no está autenticado
 
 
 # def lista_documentos(request):

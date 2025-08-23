@@ -9,7 +9,10 @@ from .models import Evaluacion
 from .forms import EvaluacionForm
 from funcionarios.models import PerfilFuncionario
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url="login")  # redirige a la página de login si no está autenticado
 def lista_evaluaciones(request):
     q = request.GET.get("q", "").strip()
     tipo = request.GET.get("tipo_personal", "").strip()

@@ -1,5 +1,4 @@
-/* Estilos específicos para index.html */
-
+/* Estilos específicos para index.html - Mejoras sutiles */
 .dark-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -69,7 +68,12 @@
 }
 
 /* Tipografía mejorada */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
@@ -81,6 +85,29 @@ h1, h2, h3, h4, h5, h6 {
 /* Container específico para index */
 .index-container {
     padding: 2rem;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Mejoras sutiles para el layout 2x2 */
+.row.justify-content-center {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Responsive mejorado */
+@media (min-width: 768px) {
+    .row-cols-md-2>* {
+        max-width: 48%;
+    }
+}
+
+@media (max-width: 767px) {
+    .index-container {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
 }

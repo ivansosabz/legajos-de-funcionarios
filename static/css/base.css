@@ -7,6 +7,8 @@
     --text-secondary: #b0b0b0;
     --accent-color: #4a6fa5;
     --hover-color: #2c3e5a;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
     --sidebar-width: 280px;
     --sidebar-collapsed-width: 80px;
     --transition-speed: 0.3s;
@@ -43,11 +45,17 @@ body {
 
 .sidebar.collapsed .sidebar-title,
 .sidebar.collapsed .nav-link span,
-.sidebar.collapsed .logout-link span {
-    display: none;
+.sidebar.collapsed .logout-btn span {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .sidebar.collapsed .sidebar-nav .nav-link {
+    justify-content: center;
+    padding: 0.75rem 0;
+}
+
+.sidebar.collapsed .logout-btn {
     justify-content: center;
     padding: 0.75rem 0;
 }
@@ -117,9 +125,10 @@ body {
     margin: 0;
     text-transform: uppercase;
     background: linear-gradient(90deg, #f0f0f0, #b0b0b0);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: opacity var(--transition-speed) ease;
+    transition: all var(--transition-speed) ease;
 }
 
 .sidebar-nav {
@@ -207,28 +216,69 @@ body {
     padding: 1.5rem 0.5rem;
 }
 
-.logout-link {
+/* Botón de cerrar sesión elegante y profesional */
+.logout-btn {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 0.75rem 1rem;
+    margin: 0;
     border-radius: 8px;
-    color: #ff6b6b;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
     text-decoration: none;
-    transition: all var(--transition-speed) ease;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
     white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 400;
 }
 
-.logout-link:hover {
-    background: rgba(255, 107, 107, 0.1);
-    color: #ff8787;
+.logout-btn:hover {
+    background: rgba(220, 53, 69, 0.08);
+    color: #ff6b6b;
+    transform: translateX(5px);
+    border-left: 3px solid rgba(220, 53, 69, 0.3);
 }
 
-.logout-link i {
+.logout-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}
+
+.logout-btn:active {
+    transform: translateX(3px);
+    background: rgba(220, 53, 69, 0.12);
+}
+
+.sidebar.collapsed .logout-btn:hover {
+    transform: none;
+    border-left: none;
+}
+
+.logout-btn i {
     font-size: 1.1rem;
     width: 24px;
     text-align: center;
+    transition: all 0.2s ease;
     flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.logout-btn:hover i {
+    transform: scale(1.1);
+    opacity: 1;
+    color: #ff8787;
+}
+
+.logout-btn span {
+    transition: all var(--transition-speed) ease;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Área de contenido */
@@ -242,28 +292,13 @@ body {
     transition: margin-left var(--transition-speed) ease;
 }
 
-@media (max-width: 767.98px) {
-    .sidebar {
-        position: fixed;
-        z-index: 1000;
-        transform: translateX(-100%);
-    }
-
-    .sidebar.show {
-        transform: translateX(0);
-    }
-
-    .content-area {
-        margin-left: 0;
-    }
-}
-
 /* Footer */
 .footer {
     background: linear-gradient(90deg, #0a0a0a 0%, #151515 100%);
     border-top: 1px solid var(--border-color);
     color: var(--text-secondary);
     padding: 2rem 0;
+    text-align: center;
 }
 
 .footer .container {
@@ -274,6 +309,7 @@ body {
 .footer-title {
     font-weight: 600;
     margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
 .footer-subtitle {
@@ -292,11 +328,15 @@ body {
 .social-icon {
     color: var(--text-secondary);
     font-size: 1.25rem;
+    text-decoration: none;
     transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
 }
 
 .social-icon:hover {
     color: var(--accent-color);
+    background: rgba(74, 111, 165, 0.1);
     transform: translateY(-3px);
 }
 
@@ -304,4 +344,49 @@ body {
     color: #666;
     font-size: 0.8rem;
     margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1000;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .content-area {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar-toggle {
+        display: none;
+    }
+}
+
+/* Mejoras adicionales para elementos interactivos */
+.btn:focus,
+.nav-link:focus,
+.logout-btn:focus {
+    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.3);
+    outline: none;
+}
+
+/* Animaciones suaves para transiciones */
+* {
+    box-sizing: border-box;
+}
+
+.sidebar * {
+    transition-duration: var(--transition-speed);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }

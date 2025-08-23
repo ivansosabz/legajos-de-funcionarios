@@ -5,6 +5,9 @@ from django.contrib import messages
 from .models import PerfilFuncionario
 from .forms import FuncionarioForm
 
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url="login")  # redirige a la página de login si no está autenticado
 
 # def lista_funcionarios(request):
 #     funcionarios = PerfilFuncionario.objects.all()
@@ -61,6 +64,7 @@ from .forms import FuncionarioForm
 #         }
 #     })
 
+@login_required(login_url="login")  # redirige a la página de login si no está autenticado
 def lista_funcionarios(request):
     funcionarios = PerfilFuncionario.objects.all().order_by("nombre")
 
