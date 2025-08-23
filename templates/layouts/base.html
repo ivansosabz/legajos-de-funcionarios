@@ -3,14 +3,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Gestión de Talento Humano - Facultad de Ciencias y Tecnología">
+    <meta name="author" content="Universidad Nacional">
+    
     <title>{% block title %}Legajo de Funcionarios{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" 
+        crossorigin="anonymous">
 
     <!-- CSS Base -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -19,104 +24,144 @@
 </head>
 <body class="bg-dark text-light d-flex flex-column min-vh-100">
 
+    <!-- Overlay para móvil -->
+    <div class="sidebar-overlay d-md-none" id="sidebarOverlay"></div>
+
     <div class="d-flex flex-grow-1">
         <!-- Sidebar elegante -->
-        <aside class="sidebar" id="sidebar">
-            <button id="sidebarToggle" class="btn btn-sm btn-outline-light sidebar-toggle d-md-none" aria-label="Toggle sidebar">
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Menú principal">
+            <button id="sidebarToggle" class="btn btn-sm btn-outline-light sidebar-toggle d-md-none" 
+                    aria-label="Alternar menú lateral" aria-expanded="false">
                 <i class="bi bi-list"></i>
             </button>
+            
             <div class="sidebar-header">
-                <div class="sidebar-logo">
+                <div class="sidebar-logo" aria-hidden="true">
                     <i class="bi bi-people-fill"></i>
                 </div>
                 <h4 class="sidebar-title">Talento Humano</h4>
             </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li>
-                        <a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
-                            <i class="bi bi-house-door"></i><span>Inicio</span>
+            
+            <nav class="sidebar-nav" role="navigation" aria-label="Navegación principal">
+                <ul role="menubar">
+                    <li role="none">
+                        <a href="{% url 'index' %}" 
+                            class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'index' %}page{% endif %}">
+                            <i class="bi bi-house-door" aria-hidden="true"></i>
+                            <span>Inicio</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{% url 'lista_funcionarios' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_funcionarios' %}active{% endif %}">
-                            <i class="bi bi-people"></i><span>Funcionarios</span>
+                    <li role="none">
+                        <a href="{% url 'lista_funcionarios' %}" 
+                            class="nav-link {% if request.resolver_match.url_name == 'lista_funcionarios' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'lista_funcionarios' %}page{% endif %}">
+                            <i class="bi bi-people" aria-hidden="true"></i>
+                            <span>Funcionarios</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{% url 'lista_documentos' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_documentos' %}active{% endif %}">
-                            <i class="bi bi-file-earmark-text"></i><span>Documentos</span>
+                    <li role="none">
+                        <a href="{% url 'lista_documentos' %}" 
+                            class="nav-link {% if request.resolver_match.url_name == 'lista_documentos' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'lista_documentos' %}page{% endif %}">
+                            <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                            <span>Documentos</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{% url 'lista_eventos' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_eventos' %}active{% endif %}">
-                            <i class="bi bi-calendar-event"></i><span>Eventos Laborales</span>
-                        </a>
-
-                    </li>
-
-
-                    <li>
-                    <li>
-                       <a href="{% url 'lista_evaluaciones' %}" class="nav-link {% if request.resolver_match.url_name == 'lista_evaluaciones' %}active{% endif %}">
-                          <i class="bi bi-clipboard-check"></i><span>Evaluaciones</span>
+                    <li role="none">
+                        <a href="{% url 'lista_eventos' %}" 
+                            class="nav-link {% if request.resolver_match.url_name == 'lista_eventos' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'lista_eventos' %}page{% endif %}">
+                            <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                            <span>Eventos Laborales</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}">
-                            <i class="bi bi-person-gear"></i><span>Usuarios</span>
+                    <li role="none">
+                        <a href="{% url 'lista_evaluaciones' %}" 
+                            class="nav-link {% if request.resolver_match.url_name == 'lista_evaluaciones' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'lista_evaluaciones' %}page{% endif %}">
+                            <i class="bi bi-clipboard-check" aria-hidden="true"></i>
+                            <span>Evaluaciones</span>
                         </a>
                     </li>
+                    {% comment %} <li role="none">
+                        <a href="#" class="nav-link {% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}" 
+                            role="menuitem" aria-current="{% if request.resolver_match.url_name == 'usuarios' %}page{% endif %}">
+                            <i class="bi bi-person-gear" aria-hidden="true"></i>
+                            <span>Usuarios</span>
+                        </a>
+                    </li> {% endcomment %}
                 </ul>
             </nav>
 
+            <div class="sidebar-footer">
+                <form method="post" action="{% url 'logout' %}" class="w-100">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn w-100 text-start" aria-label="Cerrar sesión">
+                        <i class="bi bi-box-arrow-left" aria-hidden="true"></i>
+                        <span>Cerrar sesión</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="content-area" id="mainContent" role="main">
+            <!-- Mensajes del sistema -->
             {% if messages %}
-                <div class="container mt-3">
+                <div class="messages-container mb-4">
                     {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" aria-live="polite">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar mensaje"></button>
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
 
-
-            <div class="sidebar-footer">
-                <a href="#" class="logout-link"><i class="bi bi-box-arrow-left"></i><span>Cerrar sesión</span></a>
-            </div>
-        </aside>
-
-        <!-- Contenido principal -->
-        <main class="content-area" id="mainContent">
             {% block content %}
             {% endblock %}
         </main>
     </div>
 
     <!-- Footer elegante -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <h6 class="footer-title">Sistema de Gestión de Talento Humano</h6>
             <p class="footer-subtitle">Facultad de Ciencias y Tecnología – Universidad Nacional</p>
             <div class="footer-social">
-                <a href="#" class="social-icon"><i class="bi bi-github"></i></a>
-                <a href="#" class="social-icon"><i class="bi bi-envelope-fill"></i></a>
-                <a href="#" class="social-icon"><i class="bi bi-globe2"></i></a>
+                <a href="#" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+                    <i class="bi bi-github" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Correo electrónico" rel="noopener noreferrer">
+                    <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Sitio web" rel="noopener noreferrer" target="_blank">
+                    <i class="bi bi-globe2" aria-hidden="true"></i>
+                </a>
             </div>
             <p class="footer-copyright">&copy; 2025 Todos los derechos reservados</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+            crossorigin="anonymous"></script>
+    
     <script src="{% static 'js/sidebar.js' %}"></script>
+    
     {% block scripts %}{% endblock %}
+    
     <script>
-        const toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        toastElList.map(function (toastEl) {
-            return new bootstrap.Toast(toastEl, { delay: 3000 }).show()
+        // Inicializar toasts de Bootstrap
+        document.addEventListener('DOMContentLoaded', function() {
+            const toastElList = document.querySelectorAll('.toast');
+            toastElList.forEach(function(toastEl) {
+                new bootstrap.Toast(toastEl, { delay: 3000 }).show();
+            });
         });
     </script>
 
 </body>
-</html>
+</html> 

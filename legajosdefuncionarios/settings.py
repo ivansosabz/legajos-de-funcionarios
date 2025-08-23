@@ -134,3 +134,10 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Redirigir al login si no está autenticado
+LOGIN_URL = "login"
+# A dónde se va después de iniciar sesión 
+LOGIN_REDIRECT_URL = "/"
+# A dónde se va después de cerrar sesión 
+LOGOUT_REDIRECT_URL = "login"

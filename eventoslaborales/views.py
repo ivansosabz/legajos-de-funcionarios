@@ -5,21 +5,11 @@ from django.db.models import Q
 
 from .models import EventoLaboral
 from .forms import EventoLaboralForm
-from funcionarios.models import PerfilFuncionario   # <-- import correcto
+from funcionarios.models import PerfilFuncionario
 
+from django.contrib.auth.decorators import login_required
 
-# Crear
-def insertar_evento(request):
-    if request.method == 'POST':
-        form = EventoLaboralForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Evento laboral registrado correctamente.')
-            return redirect('lista_eventos')
-    else:
-        form = EventoLaboralForm()
-    return render(request, 'eventoslaborales/insertar.html', {'form': form})
-
+@login_required(login_url="login")  # redirige a la página de login si no está autenticado
 
 # Listar + filtros/búsqueda
 def lista_eventos(request):
@@ -60,6 +50,19 @@ def lista_eventos(request):
             "funcionarios": PerfilFuncionario.objects.all().order_by("apellido", "nombre"),
         },
     )
+
+
+# Crear
+def insertar_evento(request):
+    if request.method == "POST":
+        form = EventoLaboralForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Evento laboral registrado correctamente.")
+            return redirect("lista_eventos")
+    else:
+        form = EventoLaboralForm()
+    return render(request, "eventoslaborales/insertar.html", {"form": form})
 
 
 # Editar
