@@ -161,7 +161,6 @@ def eliminar_funcionario(request, id):
     if request.method == 'POST':
         funcionario.delete()
         messages.success(request, 'Funcionario eliminado correctamente.')
-        messages.success(request, 'Funcionario eliminado correctamente.')
         return redirect('lista_funcionarios')
 
     return render(request, 'funcionarios/eliminar.html', {'funcionario': funcionario})

@@ -1,4 +1,6 @@
+# evaluaciones/forms.py
 from django import forms
+from datetime import date
 from .models import Evaluacion
 
 class EvaluacionForm(forms.ModelForm):
@@ -15,7 +17,6 @@ class EvaluacionForm(forms.ModelForm):
             "periodo_evaluacion": forms.Select(attrs={
                 "class": "form-select bg-dark text-light border-secondary"
             }),
-            # Fuerza el formato correcto y el ancho completo
             "fecha_evaluacion": forms.DateInput(
                 format="%Y-%m-%d",
                 attrs={
@@ -30,6 +31,14 @@ class EvaluacionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Asegura que al editar se vea el valor en el input date
+        # Mostrar bien la fecha al editar
         if self.instance and self.instance.pk and self.instance.fecha_evaluacion:
             self.fields["fecha_evaluacion"].initial = self.instance.fecha_evaluacion.strftime("%Y-%m-%d")
+        # Bloquear fechas futuras en el datepicker (cliente)
+        self.fields["fecha_evaluacion"].widget.attrs["max"] = date.today().strftime("%Y-%m-%d")
+
+    def clean_fecha_evaluacion(self):
+        fecha = self.cleaned_data.get("fecha_evaluacion")
+        if fecha and fecha > date.today():
+            raise forms.ValidationError("La fecha de evaluación no puede ser futura.")
+        return fecha

@@ -46,6 +46,11 @@ class FuncionarioForm(forms.ModelForm):
             'estado': forms.Select(choices=ESTADOS, attrs={'class': 'form-select form-control-dark'}),
             'estado_civil': forms.Select(choices=ESTADOS_CIVILES, attrs={'class': 'form-select form-control-dark'})
         }
+        error_messages = {
+            'cedula': {
+                'unique': 'Ya existe un funcionario registrado con esta cédula.',
+            }
+        }
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
