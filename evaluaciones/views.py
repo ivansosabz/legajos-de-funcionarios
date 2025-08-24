@@ -1,18 +1,15 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+import os  # 👈 AÑADIR
 
 from .models import Evaluacion
 from .forms import EvaluacionForm
 from funcionarios.models import PerfilFuncionario
 
-from django.contrib.auth.decorators import login_required
 
-
-@login_required(login_url="login")  # redirige a la página de login si no está autenticado
+@login_required(login_url="login")
 def lista_evaluaciones(request):
     q = request.GET.get("q", "").strip()
     tipo = request.GET.get("tipo_personal", "").strip()
@@ -58,28 +55,49 @@ def nueva_evaluacion(request):
 
 def editar_evaluacion(request, pk):
     eva = get_object_or_404(Evaluacion, pk=pk)
+
     if request.method == "POST":
         form = EvaluacionForm(request.POST, request.FILES, instance=eva)
 
-        # Soporte “eliminar archivo actual”
-        if request.POST.get("acta_evaluacion-clear"):
-            if eva.acta_evaluacion:
-                eva.acta_evaluacion.delete(save=False)
-            eva.acta_evaluacion = None
-
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)  # 👈 para poder tocar el archivo antes del save
+
+            # Ruta del archivo anterior (si existía)
+            old_path = None
+            if eva.acta_evaluacion and hasattr(eva.acta_evaluacion, "path"):
+                old_path = eva.acta_evaluacion.path
+
+            # a) Si el usuario marcó "Eliminar archivo actual"
+            if request.POST.get("acta_evaluacion-clear"):
+                if old_path and os.path.isfile(old_path):
+                    os.remove(old_path)
+                obj.acta_evaluacion = None  # deja vacío en BD
+
+            # b) Si subieron un archivo nuevo, borra el anterior
+            elif "acta_evaluacion" in request.FILES and old_path:
+                if os.path.isfile(old_path):
+                    os.remove(old_path)
+
+            obj.save()
             messages.success(request, "Evaluación actualizada correctamente.")
             return redirect("lista_evaluaciones")
     else:
         form = EvaluacionForm(instance=eva)
+
     return render(request, "evaluaciones/editar.html", {"form": form, "evaluacion": eva})
 
 
 def eliminar_evaluacion(request, pk):
     eva = get_object_or_404(Evaluacion, pk=pk)
+
     if request.method == "POST":
+        # Borra el archivo físico si existe (igual que Documentos)
+        if eva.acta_evaluacion and hasattr(eva.acta_evaluacion, "path"):
+            if os.path.isfile(eva.acta_evaluacion.path):
+                os.remove(eva.acta_evaluacion.path)
+
         eva.delete()
         messages.success(request, "Evaluación eliminada correctamente.")
         return redirect("lista_evaluaciones")
+
     return render(request, "evaluaciones/eliminar.html", {"evaluacion": eva})

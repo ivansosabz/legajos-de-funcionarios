@@ -16,42 +16,43 @@ class DocumentoForm(forms.ModelForm):
         ]
         widgets = {
             "funcionario": forms.Select(
-                attrs={"class": "form-control bg-dark text-white border-secondary"}
+                attrs={"class": "form-select bg-dark text-light border-secondary"}
             ),
             "tipo_documento": forms.Select(
-                attrs={"class": "form-control bg-dark text-white border-secondary"}
+                attrs={"class": "form-select bg-dark text-light border-secondary"}
             ),
             "fecha_presentacion": forms.DateInput(
                 attrs={
                     "type": "date",
-                    "class": "form-control bg-dark text-white border-secondary",
+                    "class": "form-control bg-dark text-light border-secondary",
                 },
                 format="%Y-%m-%d",
             ),
             "fecha_vencimiento": forms.DateInput(
                 attrs={
                     "type": "date",
-                    "class": "form-control bg-dark text-white border-secondary",
+                    "class": "form-control bg-dark text-light border-secondary",
                 },
                 format="%Y-%m-%d",
             ),
-            "archivo": forms.ClearableFileInput(
-                attrs={"class": "form-control bg-dark text-white border-secondary"}
+            # FileInput simple: el “clear” lo manejamos nosotros en la plantilla + view
+            "archivo": forms.FileInput(
+                attrs={"class": "form-control bg-dark text-light border-secondary"}
             ),
             "estado": forms.Select(
-                attrs={"class": "form-control bg-dark text-white border-secondary"}
+                attrs={"class": "form-select bg-dark text-light border-secondary"}
             ),
             "observaciones": forms.Textarea(
                 attrs={
                     "rows": 3,
-                    "class": "form-control bg-dark text-white border-secondary",
+                    "class": "form-control bg-dark text-light border-secondary",
                 }
             ),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Si hay instancia existente, cargar las fechas formateadas
+        # Formatear fechas en edición
         for field_name in ["fecha_presentacion", "fecha_vencimiento"]:
             fecha = getattr(self.instance, field_name, None)
             if fecha:
