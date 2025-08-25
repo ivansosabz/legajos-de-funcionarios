@@ -10,7 +10,6 @@ from funcionarios.models import PerfilFuncionario
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="login")  # redirige a la página de login si no está autenticado
-
 # Listar + filtros/búsqueda
 def lista_eventos(request):
     q = request.GET.get("q", "").strip()
@@ -53,6 +52,7 @@ def lista_eventos(request):
 
 
 # Crear
+@login_required(login_url="login")
 def insertar_evento(request):
     if request.method == "POST":
         form = EventoLaboralForm(request.POST, request.FILES)
@@ -66,6 +66,7 @@ def insertar_evento(request):
 
 
 # Editar
+@login_required(login_url="login")
 def editar_evento(request, id_evento):
     evento = get_object_or_404(EventoLaboral, pk=id_evento)
 
@@ -87,6 +88,7 @@ def editar_evento(request, id_evento):
 
 
 # Eliminar
+@login_required(login_url="login")
 def eliminar_evento(request, id_evento):
     evento = get_object_or_404(EventoLaboral, pk=id_evento)
 

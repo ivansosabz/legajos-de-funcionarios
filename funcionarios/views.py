@@ -127,6 +127,7 @@ def lista_funcionarios(request):
     return render(request, "funcionarios/index.html", context)
 
 
+@login_required(login_url="login")
 def insertar_funcionario(request):
     if request.method == 'POST':
         form = FuncionarioForm(request.POST)
@@ -140,6 +141,7 @@ def insertar_funcionario(request):
     return render(request, 'funcionarios/insertar.html', {'form': form})
 
 
+@login_required(login_url="login")
 def editar_funcionario(request, id):
     funcionario = get_object_or_404(PerfilFuncionario, id=id)
 
@@ -155,6 +157,7 @@ def editar_funcionario(request, id):
     return render(request, 'funcionarios/editar.html', {'form': form, 'funcionario': funcionario})
 
 
+@login_required(login_url="login")
 def eliminar_funcionario(request, id):
     funcionario = get_object_or_404(PerfilFuncionario, id=id)
 

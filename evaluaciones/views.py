@@ -41,6 +41,7 @@ def lista_evaluaciones(request):
     })
 
 
+@login_required(login_url="login")
 def nueva_evaluacion(request):
     if request.method == "POST":
         form = EvaluacionForm(request.POST, request.FILES)
@@ -53,6 +54,7 @@ def nueva_evaluacion(request):
     return render(request, "evaluaciones/insertar.html", {"form": form})
 
 
+@login_required(login_url="login")
 def editar_evaluacion(request, pk):
     eva = get_object_or_404(Evaluacion, pk=pk)
 
@@ -87,6 +89,7 @@ def editar_evaluacion(request, pk):
     return render(request, "evaluaciones/editar.html", {"form": form, "evaluacion": eva})
 
 
+@login_required(login_url="login")
 def eliminar_evaluacion(request, pk):
     eva = get_object_or_404(Evaluacion, pk=pk)
 
