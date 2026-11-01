@@ -112,10 +112,6 @@ git push origin tu-rama
 | `style:`   | Cambios de formato (sin afectar funcionalidad)   | `style: fix code indentation`    |
 | `test:`    | Pruebas nuevas o correcciones                   | `test: add login tests`          |
 
-**Ejemplo completo:**
-```bash
-git commit -m "feat: implement password reset functionality"
-```
 ## 📄 Licencia
 
 Este proyecto está bajo la [Licencia MIT](LICENSE).  
